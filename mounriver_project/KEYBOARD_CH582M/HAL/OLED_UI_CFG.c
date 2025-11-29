@@ -79,11 +79,13 @@ const oled_ui_menu_structure cfg_menu_5 = {
 const oled_ui_menu_structure cfg_menu_6 = {
   .type = OLED_UI_TYPE_MENU,
   .text[0] = "auto_mouse",
+  .text[1] = "mac_mode",
   .p[0] = (uint8_t*)&auto_mouse_click_en,
+  .p[1] = (uint8_t*)&mac_mode_en,
   .p[3] = (uint8_t*)&main_menu,
   .p[4] = (uint8_t*)&cfg_menu_5,
   .p[5] = (uint8_t*)&cfg_menu_1,
-  .menu_size = 1,
+  .menu_size = 2,
 };
 const oled_ui_menu_structure key_status_menu_1 = {
   .type = OLED_UI_TYPE_MENU,
@@ -393,7 +395,15 @@ const oled_ui_enter_num_structure auto_mouse_click_en = {
   .line = FS_LINE_AUTO_MOUSE_CLICK,
   .limit_len = 0,
 };
-
+const oled_ui_enter_num_structure mac_mode_en = {
+  .type = OLED_UI_TYPE_ENTER_NUM,
+  .p = (uint8_t*)&cfg_menu_6,
+  .preStr = "val:",
+  .postStr = "OK",
+  .pStr_len = 4,
+  .line = FS_LINE_CURRENT_SYS,
+  .limit_len = 1,
+};
 
 /* 执行项 */
 const oled_ui_execute_structure scan_tpm = {

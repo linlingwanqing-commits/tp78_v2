@@ -922,7 +922,8 @@ void hid_keyboard_test(void)
 static void USB_ProcessTMOSMsg( tmos_event_hdr_t *pMsg )
 {
   if (usb_host_suspend_flag) {
-    USB_DevWakeup();
+    if (g_Enable_Status.mac_mode == HOST_SYS_WINDOWS_LINUX)
+      USB_DevWakeup();
     usb_host_suspend_flag = FALSE;
   }
   switch ( pMsg->event )

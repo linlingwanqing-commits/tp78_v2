@@ -1204,6 +1204,12 @@ void FLASH_Init(void)
     g_Enable_Status.auto_mouse_click = TRUE;
     config_auto_mouse_control_time = tmp;
   }
+  HAL_Fs_Read_keyboard_cfg(FS_LINE_CURRENT_SYS, 1, &tmp); // 当前系统 - windows/macOS
+  if (tmp == HOST_SYS_WINDOWS_LINUX) {
+    g_Enable_Status.mac_mode = FALSE;
+  } else {
+    g_Enable_Status.mac_mode = TRUE;
+  }
 
 #if (defined HAL_WS2812_PWM) && (HAL_WS2812_PWM == TRUE)
   DATAFLASH_Read_LEDStyle( );

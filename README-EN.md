@@ -316,3 +316,7 @@ You can submit you code [here](https://github.com/ChnMasterOG/tp78_v2/issues). T
         2. Add the KEY_TP_MAP_SCROLL key (corresponding to via TP Map Scroll key). When pressed this key, the trackpoint moves in the Y direction and changes to move in the Z direction. Pressing it again cancels the movement.
 
         3. Add a function to reduce the brightness of the OLED screen when in idle state.
+
+- V2.1.13
+
+        1. Add mac_mode configuration. The configuration takes effect only when it is set to 1, and it is compatible with macOS.

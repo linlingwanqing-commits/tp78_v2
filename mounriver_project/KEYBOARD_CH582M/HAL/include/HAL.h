@@ -165,6 +165,10 @@ typedef union {
 #define RF_CAPSLOCK_LEDON_BIT               0x4
 #define UI_CAPSLOCK_LEDON_BIT               0x80
 
+/* Host System */
+#define HOST_SYS_WINDOWS_LINUX              0x0
+#define HOST_SYS_MAC                        0x1
+
 typedef struct tag_uart_package
 {
   tmos_event_hdr_t hdr;
@@ -226,6 +230,7 @@ typedef struct _Enable_Status_t
     uint8_t auto_mouse_click : 1;
     uint8_t sleep : 1;
     uint8_t tp_map_scroll : 1;
+    uint8_t mac_mode : 1;
 }Enable_Status_t;
 
 /*********************************************************************

@@ -322,3 +322,7 @@ BUG
         2. 增加KEY_TP_MAP_SCROLL键（via 对应 TP Map Scroll 按键），按下后小红点Y方向移动变成Z方向移动，再次按下后取消
 
         3. 增加一级待机（idle）下OLED屏幕亮度降低的功能
+
+- V2.1.13
+
+        1. 增加mac_mode。配置为非0生效，适配macOS

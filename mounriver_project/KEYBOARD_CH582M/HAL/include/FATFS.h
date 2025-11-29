@@ -35,6 +35,7 @@
   #define FS_LINE_RF_CHECK_ACK_MS         18
   #define FS_LINE_ENABLE_MOTOR            19
   #define FS_LINE_AUTO_MOUSE_CLICK        20
+  #define FS_LINE_CURRENT_SYS             21
 
   uint8_t unsigned_dec_to_string(uint16_t num, char *buff, uint8_t type);
   uint8_t string_dec_to_u16(char *buff, uint16_t *num);
