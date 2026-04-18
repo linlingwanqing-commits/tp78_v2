@@ -260,7 +260,7 @@ static void via_custom_value_command(uint8_t *data, uint8_t len) {
     }
     case 1: { // RGBLight
       switch (*command_value) {
-        case 1: { // id_BLE_device
+        case 1: { // id_LED_Style
           uint16_t ledstyle;
           if (*command_id == VIA_ID_CUSTOM_SET_VALUE) {
             ledstyle = data[3];

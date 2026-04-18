@@ -62,7 +62,7 @@ all:
 main-build: BLE_CH582M.elf secondary-outputs
 
 post-build: 
-	riscv-none-embed-objcopy -O binary "BLE_CH582M.elf" "BLE_CH582M.bin"
+	riscv-wch-elf-objcopy -O binary "BLE_CH582M.elf" "BLE_CH582M.bin"
 
 # Tool invocations
 BLE_CH582M.elf: $(OBJS) $(USER_OBJS)

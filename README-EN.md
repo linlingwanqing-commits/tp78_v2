@@ -320,3 +320,9 @@ You can submit you code [here](https://github.com/ChnMasterOG/tp78_v2/issues). T
 - V2.1.13
 
         1. Add mac_mode configuration. The configuration takes effect only when it is set to 1, and it is compatible with macOS.
+
+- V2.1.14
+
+        1. Add extension module(TPM) Salieri.
+
+        2. Add explanations for buttons and layer switching in the "TP78v2 user guide" documentation.
