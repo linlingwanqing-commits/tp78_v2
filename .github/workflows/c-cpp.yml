@@ -34,3 +34,20 @@ jobs:
             cd ../../
             cd ./VLD_CH582M/obj
             make
+    - name: Upload KEYBOARD firmware
+      uses: actions/upload-artifact@v4
+      with:
+        name: KEYBOARD_CH582M_firmware
+        path: ./mounriver_project/KEYBOARD_CH582M/obj/*.hex
+        
+    - name: Upload RF firmware
+      uses: actions/upload-artifact@v4
+      with:
+        name: RF_CH582M_firmware
+        path: ./mounriver_project/RF_CH582M/obj/*.hex
+        
+    - name: Upload VLD firmware
+      uses: actions/upload-artifact@v4
+      with:
+        name: VLD_CH582M_firmware
+        path: ./mounriver_project/VLD_CH582M/obj/*.hex
