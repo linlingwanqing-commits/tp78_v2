@@ -11,45 +11,60 @@
 #include "HAL.h"
 #include "snake.h"
 
-const uint32_t Row_Pin[ROW_SIZE] = {GPIO_Pin_6, GPIO_Pin_5, GPIO_Pin_3, GPIO_Pin_2, GPIO_Pin_1, GPIO_Pin_0};   //row 6 - 其它键盘布局需修改此处
+const uint32_t Row_Pin[ROW_SIZE] = {GPIO_Pin_6, GPIO_Pin_5, GPIO_Pin_3, GPIO_Pin_2, GPIO_Pin_1};   //row 5 - 其它键盘布局需修改此处
 const uint32_t Colum_Pin[COL_SIZE] = {GPIO_Pin_4, GPIO_Pin_5, GPIO_Pin_6, GPIO_Pin_0, GPIO_Pin_1, GPIO_Pin_2, GPIO_Pin_3,
-                                      GPIO_Pin_15, GPIO_Pin_14, GPIO_Pin_13, GPIO_Pin_12, GPIO_Pin_11, GPIO_Pin_9, GPIO_Pin_7};   //colum 14 - 其它键盘布局需修改此处
-//row*colum = 6*14 = 84
+                                      GPIO_Pin_15, GPIO_Pin_14, GPIO_Pin_13, GPIO_Pin_12, GPIO_Pin_11, GPIO_Pin_9,};   //colum 13 - 其它键盘布局需修改此处
+//row*colum = 5*13 = 65
 const uint8_t KeyArrary[ROW_SIZE][COL_SIZE] = {
-          //---- COL 0 ----|-- COL 1 --|-- COL 2 --|--- COL 3 ---|--- COL 4 ---|--- COL 5 ---|- COL 6 -|--- COL 7 ---|--- COL 8 ---|--- COL 9 ---|---- COL10 ----|---- COL11 ----|---- COL12 ----|---- COL13 ----|
-/* ROW0 */{ KEY_ESCAPE,     KEY_F1,     KEY_F2,     KEY_F3,       KEY_F4,       KEY_F5,       KEY_F6,   KEY_F7,       KEY_F8,       KEY_F9,       KEY_F10,        KEY_F11,        KEY_F12,        KEY_Delete    },
-/* ROW1 */{ KEY_GraveAccent,KEY_1,      KEY_2,      KEY_3,        KEY_4,        KEY_5,        KEY_6,    KEY_7,        KEY_8,        KEY_9,        KEY_0,          KEY_Subtraction,KEY_Equal,      KEY_BACKSPACE },
-/* ROW2 */{ KEY_TAB,        KEY_Q,      KEY_W,      KEY_E,        KEY_R,        KEY_T,        KEY_Y,    KEY_U,        KEY_I,        KEY_O,        KEY_P,          KEY_LSbrackets, KEY_RSbrackets, KEY_NonUS_WS  },
-/* ROW3 */{ KEY_CapsLock,   KEY_A,      KEY_S,      KEY_D,        KEY_F,        KEY_G,        KEY_H,    KEY_J,        KEY_K,        KEY_L,        KEY_Semicolon,  KEY_Quotation,  KEY_ENTER,      KEY_PageUp    },
-/* ROW4 */{ KEY_LeftShift,  KEY_None,   KEY_Z,      KEY_X,        KEY_C,        KEY_V,        KEY_B,    KEY_N,        KEY_M,        KEY_Comma,    KEY_FullStop,   KEY_Slash,      KEY_RightShift, KEY_PageDown  },
-/* ROW5 */{ KEY_LeftCTRL,   KEY_LeftGUI,KEY_LeftAlt,KEY_SPACEBAR, KEY_SPACEBAR, KEY_RightAlt, KEY_Fn,   KEY_RightCTRL,KEY_LeftArrow,KEY_DownArrow,KEY_RightArrow, KEY_UpArrow,    KEY_End,        KEY_Home      },
-};  // 默认键盘布局 - 其它键盘布局需修改此处
+const uint8_t KeyArrary[ROW_SIZE][COL_SIZE] = {
+    // ROW0: Esc, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, \, Backspace
+    { KEY_ESCAPE,   KEY_1,      KEY_2,      KEY_3,      KEY_4,      KEY_5,      KEY_6,      KEY_7,      KEY_8,      KEY_9,      KEY_0,      KEY_Backslash,  KEY_BACKSPACE },
+    
+    // ROW1: Tab, Q, W, E, R, T, Y, U, I, O, P, [, ]
+    { KEY_TAB,      KEY_Q,      KEY_W,      KEY_E,      KEY_R,      KEY_T,      KEY_Y,      KEY_U,      KEY_I,      KEY_O,      KEY_P,      KEY_LSbrackets, KEY_RSbrackets },
+    
+    // ROW2: CapsLock, A, S, D, F, G, H, J, K, L, ;, ', Enter
+    { KEY_CapsLock, KEY_A,      KEY_S,      KEY_D,      KEY_F,      KEY_G,      KEY_H,      KEY_J,      KEY_K,      KEY_L,      KEY_Semicolon, KEY_Quotation,  KEY_ENTER },
+    
+    // ROW3: Shift, Z, X, C, V, B, N, M, ,, ., ↑, /, Shift
+    { KEY_LeftShift,KEY_Z,      KEY_X,      KEY_C,      KEY_V,      KEY_B,      KEY_N,      KEY_M,      KEY_Comma,  KEY_FullStop,KEY_UpArrow, KEY_Slash,      KEY_RightShift },
+    
+    // ROW4: Ctrl, Delete, Win, Alt, 空格, Fn, Menu, 空格, ←, ↓, →, Ctrl, (第13列留空)
+    { KEY_LeftCTRL, KEY_Delete, KEY_LeftGUI, KEY_LeftAlt, KEY_SPACEBAR, KEY_Fn,  KEY_Fn,   KEY_SPACEBAR, KEY_LeftArrow, KEY_DownArrow, KEY_RightArrow, KEY_RightCTRL,},
+};
 const uint8_t Extra_KeyArrary[ROW_SIZE][COL_SIZE] = {
-          //-- COL 0 --|--- COL 1 ---|--- COL 2 ---|---- COL 3 ----|--- COL 4 ---|--- COL 5 ---|- COL 6 -|- COL 7 -|- COL 8 -|- COL 9 -|---- COL10 ----|- COL11 -|- COL12 -|-- COL13 --|
-/* ROW0 */{ KEY_None,   KEY_None,     KEY_None,     KEY_None,       KEY_None,     KEY_None,     KEY_None, KEY_None, KEY_None, KEY_None, KEY_None,       KEY_None, KEY_None, KEY_None  },
-/* ROW1 */{ KEY_None,   KEY_None,     KEY_None,     KEY_None,       KEY_None,     KEY_None,     KEY_None, KEY_None, KEY_None, KEY_None, KEY_None,       KEY_None, KEY_None, KEY_None  },
-/* ROW2 */{ KEY_None,   KEY_BACKSPACE,KEY_UpArrow,  KEY_ENTER,      KEY_PageUp,   KEY_None,     KEY_None, KEY_None, KEY_None, KEY_None, KEY_PrintScreen,KEY_None, KEY_None, KEY_None  },
-/* ROW3 */{ KEY_None,   KEY_LeftArrow,KEY_DownArrow,KEY_RightArrow, KEY_PageDown, KEY_None,     KEY_None, KEY_None, KEY_None, KEY_None, KEY_None,       KEY_None, KEY_None, KEY_None  },
-/* ROW4 */{ KEY_None,   KEY_None,     KEY_None,     KEY_None,       KEY_Home,     KEY_End,      KEY_None, KEY_None, KEY_None, KEY_None, KEY_None,       KEY_None, KEY_None, KEY_None  },
-/* ROW5 */{ KEY_None,   KEY_None,     KEY_None,     KEY_MouseL,     KEY_MouseR,   KEY_None,     KEY_None, KEY_None, KEY_None, KEY_None, KEY_None,       KEY_None, KEY_None, KEY_None  },
-};  // 额外默认键盘布局 - 其它键盘布局需修改此处
+    // COL0 COL1 COL2 COL3 COL4 COL5 COL6 COL7 COL8 COL9 COL10 COL11 COL12
+    { KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None },  // ROW0
+    { KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None },  // ROW1
+    { KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None },  // ROW2
+    { KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None },  // ROW3
+    { KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None, KEY_None },  // ROW4
+};
 const uint8_t SP_KeyArrary[SP_KEY_NUMBER][8] = {
-        { 0x5,      0x0,      KEY_Delete,       0x0,      0x0,      0x0,      0x0,      0x0 }, //1 - Ctrl+Alt+Del
-        { 0x3,      0x0,      KEY_Delete,       0x0,      0x0,      0x0,      0x0,      0x0 }, //2 - Ctrl+Shift+Del
-        { 0x0,      0x0,      0x0,              0x0,      0x0,      0x0,      0x0,      0x0 }, //3
-        { 0x0,      0x0,      0x0,              0x0,      0x0,      0x0,      0x0,      0x0 }, //4
-        { 0x0,      0x0,      0x0,              0x0,      0x0,      0x0,      0x0,      0x0 }, //5
-        { 0x9,      0x0,      KEY_LeftArrow,    0x0,      0x0,      0x0,      0x0,      0x0 }, //6 - GUI+Ctrl+Left
-        { 0x9,      0x0,      KEY_RightArrow,   0x0,      0x0,      0x0,      0x0,      0x0 }, //7 - GUI+Ctrl+Right
-};  // SP按键默认映射
+    /* 1 */ { 0x01, 0x0, KEY_C,      0x0, 0x0, 0x0, 0x0, 0x0 },  // Ctrl+C  复制
+    /* 2 */ { 0x01, 0x0, KEY_V,      0x0, 0x0, 0x0, 0x0, 0x0 },  // Ctrl+V  粘贴
+    /* 3 */ { 0x01, 0x0, KEY_X,      0x0, 0x0, 0x0, 0x0, 0x0 },  // Ctrl+X  剪切
+    /* 4 */ { 0x01, 0x0, KEY_Z,      0x0, 0x0, 0x0, 0x0, 0x0 },  // Ctrl+Z  撤销
+    /* 5 */ { 0x01, 0x0, KEY_Y,      0x0, 0x0, 0x0, 0x0, 0x0 },  // Ctrl+Y  重做
+    /* 6 */ { 0x08, 0x0, KEY_X,      0x0, 0x0, 0x0, 0x0, 0x0 },  // Win+X   高级菜单
+    /* 7 */ { 0x01, 0x0, KEY_W,      0x0, 0x0, 0x0, 0x0, 0x0 },  // Ctrl+W  关闭标签页
+};
 const uint8_t Key_To_LEDNumber[ROW_SIZE][COL_SIZE] = {
-/* ROW0 */{ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12, 13 },
-/* ROW1 */{ 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27 },
-/* ROW2 */{ 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41 },
-/* ROW3 */{ 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55 },
-/* ROW4 */{ 56, 255,57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68 },
-/* ROW5 */{ 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82 },
-};  // 矩阵键盘位置转LED编号
+    // ROW0: 左→右（正向）
+    { 0,   1,   2,   3,   4,   5,   6,   7,   8,   9,   10,  11,  12 },
+    
+    // ROW1: 右→左（反向）
+    { 25,  24,  23,  22,  21,  20,  19,  18,  17,  16,  15,  14,  13 },
+    
+    // ROW2: 左→右（正向）
+    { 26,  27,  28,  29,  30,  31,  32,  33,  34,  35,  36,  37,  38 },
+    
+    // ROW3: 右→左（反向）
+    { 51,  50,  49,  48,  47,  46,  45,  44,  43,  42,  41,  40,  39 },
+    
+    // ROW4: 左→右（正向）
+    { 52,  53,  54,  55,  56,  57,  58,  59,  60,  61,  62,  63,  64 },
+};
 uint32_t Row_Pin_ALL = 0, Colum_Pin_ALL = 0;
 uint8_t CustomKey[ROW_SIZE][COL_SIZE];  //自定义按键层
 uint8_t Extra_CustomKey[ROW_SIZE][COL_SIZE];   //自定义额外按键层

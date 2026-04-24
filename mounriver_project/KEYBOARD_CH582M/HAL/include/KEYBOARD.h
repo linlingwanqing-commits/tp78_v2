@@ -16,8 +16,8 @@
     #define Row_GPIO_(x)    GPIOB_ ## x
     #define Colum_GPIO_(x)  GPIOA_ ## x
 
-    #define ROW_SIZE        6    // 键盘行数 - 其它键盘布局需修改此处
-    #define COL_SIZE        14   // 键盘列数 - 其它键盘布局需修改此处
+    #define ROW_SIZE        5    // 键盘行数 - 其它键盘布局需修改此处
+    #define COL_SIZE        13   // 键盘列数 - 其它键盘布局需修改此处
 
     #define MAX_PRESS_COUNT       15    // 8个特殊键+6个一般键+1个Fn键
     #define MAX_CHANGETIMES       24    // 按下Capslock改变键盘布局检测次数
